@@ -1,0 +1,65 @@
+﻿@page
+@model BookingManagement.User.Razor.Pages.RoomList.DetailsModel
+@{
+    ViewData["Title"] = "Room Details";
+}
+
+<div class="room-details-container">
+    <h4 class="room-details-header">Room Details</h4>
+    
+    <div class="room-details">
+        <div class="room-details-image">
+            <div style="width: 100%; max-width: 450px;">
+                @if (!string.IsNullOrEmpty(Model.Room.ImageUrl))
+                {
+                    <img src="@Model.GetDirectImageUrl(Model.Room.ImageUrl)" alt="Room Image" class="room-image" />
+                }
+                else
+                {
+                    <div class="no-image"><i class="bi bi-image me-2"></i>No image available</div>
+                }
+            </div>
+        </div>
+        <div class="room-details-info">
+            <dl class="row">
+                <dt class="col-sm-4"><i class="bi bi-door-open"></i> @Html.DisplayNameFor(model => model.Room.RoomName)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Room.RoomName)</dd>
+                
+                <dt class="col-sm-4"><i class="bi bi-people"></i> @Html.DisplayNameFor(model => model.Room.Capacity)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Room.Capacity) người</dd>
+                
+                <dt class="col-sm-4"><i class="bi bi-tag"></i> @Html.DisplayNameFor(model => model.Room.RoomType)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Room.RoomType)</dd>
+                
+                <dt class="col-sm-4"><i class="bi bi-building"></i> @Html.DisplayNameFor(model => model.Room.Building)</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Room.Building)</dd>
+                
+                <dt class="col-sm-4"><i class="bi bi-check-circle"></i> Trạng thái</dt>
+                <dd class="col-sm-8">
+                    <span class="status-badge @(Model.Room.Status == 1 ? "status-active" : "status-inactive")">
+                        @Model.GetStatusTextForRoomList(Model.Room.Status)
+                    </span>
+                </dd>
+            </dl>
+            
+            @if (!string.IsNullOrEmpty(Model.Room.Description))
+            {
+                <div class="mt-3">
+                    <h5><i class="bi bi-info-circle me-2"></i>Mô tả</h5>
+                    <div class="room-description">
+                        @Html.DisplayFor(model => model.Room.Description)
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    
+    <div class="action-buttons">
+        <a asp-page="/BookingRoom/Create" asp-route-id="@Model.Room.RoomId" class="btn-action btn-booking">
+            <i class="bi bi-calendar-plus"></i> Đặt phòng này
+        </a>
+        <a asp-page="./Index" class="btn-action btn-back">
+            <i class="bi bi-arrow-left"></i> Quay lại
+        </a>
+    </div>
+</div>

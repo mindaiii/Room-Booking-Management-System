@@ -1,0 +1,103 @@
+﻿@page
+@model BookingManagement.User.Razor.Pages.BookingRoom.DeleteModel
+
+@{
+    ViewData["Title"] = "Hủy đặt phòng";
+}
+
+<div class="booking-cancel-container">
+    <h4 class="booking-cancel-header">Hủy đặt phòng</h4>
+    <div class="booking-cancel-subheader">Bạn có chắc chắn muốn hủy đặt phòng này?</div>
+    
+    <div class="booking-cancel-alert">
+        <i class="bi bi-exclamation-triangle"></i> Lưu ý: Hành động này không thể hoàn tác sau khi xác nhận.
+    </div>
+    
+    <div class="booking-summary">
+        <h5 class="booking-summary-header"><i class="bi bi-info-circle"></i> Thông tin đặt phòng</h5>
+        
+        <div class="booking-summary-item">
+            <div class="booking-summary-icon">
+                <i class="bi bi-person"></i>
+            </div>
+            <div class="booking-summary-content">
+                <div class="booking-summary-label">Người đặt</div>
+                <div class="booking-summary-value">@Model.Booking.User.FullName</div>
+            </div>
+        </div>
+        
+        <div class="booking-summary-item">
+            <div class="booking-summary-icon">
+                <i class="bi bi-building"></i>
+            </div>
+            <div class="booking-summary-content">
+                <div class="booking-summary-label">Phòng</div>
+                <div class="booking-summary-value">@Model.Booking.Room.RoomName (@Model.Booking.Room.Building)</div>
+            </div>
+        </div>
+        
+        <div class="booking-summary-item">
+            <div class="booking-summary-icon">
+                <i class="bi bi-calendar"></i>
+            </div>
+            <div class="booking-summary-content">
+                <div class="booking-summary-label">Ngày đặt</div>
+                <div class="booking-summary-value">@Model.Booking.BookingDate.ToString("dd/MM/yyyy")</div>
+            </div>
+        </div>
+        
+        <div class="booking-summary-item">
+            <div class="booking-summary-icon">
+                <i class="bi bi-clock"></i>
+            </div>
+            <div class="booking-summary-content">
+                <div class="booking-summary-label">Khung giờ</div>
+                <div class="booking-summary-value">@Model.TimeSlotDto.StartTime - @Model.TimeSlotDto.EndTime</div>
+            </div>
+        </div>
+        
+        <div class="booking-summary-item">
+            <div class="booking-summary-icon">
+                <i class="bi bi-check-circle"></i>
+            </div>
+            <div class="booking-summary-content">
+                <div class="booking-summary-label">Trạng thái</div>
+                <div class="booking-summary-value">
+                    <span class="booking-summary-status @Model.GetStatusClass(Model.Booking.Status)">
+                        @Model.GetStatusText(Model.Booking.Status)
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <label class="booking-checkbox-container">
+        <input type="checkbox" id="confirmCancel" class="booking-checkbox">
+        <span class="booking-checkbox-label">Tôi hiểu rằng việc hủy đặt phòng này là không thể hoàn tác.</span>
+    </label>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Booking.BookingId" />
+        <div class="booking-cancel-actions">
+            <button type="submit" id="cancelButton" class="booking-cancel-btn btn-cancel" disabled>
+                <i class="bi bi-x-circle"></i> Xác nhận hủy đặt phòng
+            </button>
+            <a asp-page="./Index" class="booking-cancel-btn btn-back">
+                <i class="bi bi-arrow-left"></i> Quay lại danh sách
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkbox = document.getElementById('confirmCancel');
+            const cancelButton = document.getElementById('cancelButton');
+            
+            checkbox.addEventListener('change', function() {
+                cancelButton.disabled = !this.checked;
+            });
+        });
+    </script>
+}
