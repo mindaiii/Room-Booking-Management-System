@@ -8,8 +8,149 @@ html {
   }
 }
 
+/* Orange theme colors */
+:root {
+  --primary-orange: #f27125;
+  --primary-orange-dark: #d85e1c;
+  --primary-orange-light: #ff8a3e;
+  --primary-orange-lighter: #fff3ee;
+  --secondary-gray: #6c757d;
+  --success-green: #28a745;
+  --danger-red: #dc3545;
+  --warning-yellow: #ffc107;
+  --info-blue: #17a2b8;
+  --light-gray: #f8f9fa;
+  --dark-gray: #343a40;
+}
+
+/* Global button and form focus styles with orange theme */
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem var(--primary-orange);
+}
+
+/* Override Bootstrap primary color with orange */
+.btn-primary {
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-orange-dark);
+  border-color: var(--primary-orange-dark);
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(242, 113, 37, 0.5);
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active {
+  background-color: var(--primary-orange-dark);
+  border-color: var(--primary-orange-dark);
+}
+
+.btn-outline-primary {
+  color: var(--primary-orange);
+  border-color: var(--primary-orange);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+}
+
+.text-primary {
+  color: var(--primary-orange) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary-orange) !important;
+}
+
+.border-primary {
+  border-color: var(--primary-orange) !important;
+}
+
+/* Links */
+a {
+  color: var(--primary-orange);
+}
+
+a:hover {
+  color: var(--primary-orange-dark);
+}
+
+/* Cards with orange accents */
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Custom orange button variants */
+.btn-orange {
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+  color: white;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 10px 24px;
+  transition: all 0.3s ease;
+}
+
+.btn-orange:hover {
+  background-color: var(--primary-orange-dark);
+  border-color: var(--primary-orange-dark);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(242, 113, 37, 0.3);
+}
+
+.btn-outline-orange {
+  color: var(--primary-orange);
+  border-color: var(--primary-orange);
+  background-color: transparent;
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 10px 24px;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-orange:hover {
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(242, 113, 37, 0.3);
+}
+
+/* Form controls with orange focus */
+.form-control:focus {
+  border-color: var(--primary-orange);
+  box-shadow: 0 0 0 0.2rem rgba(242, 113, 37, 0.25);
+}
+
+.form-check-input:checked {
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+}
+
+/* Alert variants */
+.alert-primary {
+  background-color: var(--primary-orange-lighter);
+  border-color: var(--primary-orange-light);
+  color: var(--primary-orange-dark);
+}
+
+/* Badge variants */
+.badge-primary {
+  background-color: var(--primary-orange);
 }
 
 html {
@@ -19,4 +160,177 @@ html {
 
 body {
   margin-bottom: 60px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+/* Icon utilities */
+.icon-circle {
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    aspect-ratio: 1 / 1 !important;
+}
+
+.icon-sm {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.icon-md {
+    width: 60px !important;
+    height: 60px !important;
+}
+
+.icon-lg {
+    width: 80px !important;
+    height: 80px !important;
+}
+
+.icon-xl {
+    width: 100px !important;
+    height: 100px !important;
+}
+
+/* Ensure all icons in cards are properly sized */
+.card .icon-circle,
+.action-card .icon-circle,
+.feature-card .icon-circle,
+.welcome-card .icon-circle {
+    min-width: 60px;
+    min-height: 60px;
+}
+
+/* Footer enhancements */
+.footer {
+  background-color: var(--dark-gray);
+  color: white;
+  padding: 40px 0 20px;
+}
+
+.footer h5 {
+  color: var(--primary-orange);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.footer a {
+  color: #adb5bd;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: var(--primary-orange);
+}
+
+.footer .text-muted {
+  color: #6c757d !important;
+}
+
+/* Loading animations */
+.loading-spinner {
+  border: 3px solid var(--light-gray);
+  border-top: 3px solid var(--primary-orange);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Utility classes */
+.text-orange {
+  color: var(--primary-orange) !important;
+}
+
+.bg-orange {
+  background-color: var(--primary-orange) !important;
+}
+
+.bg-orange-light {
+  background-color: var(--primary-orange-lighter) !important;
+}
+
+.border-orange {
+  border-color: var(--primary-orange) !important;
+}
+
+/* Regulations Modal Styles */
+.regulation-modal-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(242, 113, 37, 0.1), rgba(255, 138, 62, 0.05));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid white;
+  box-shadow: 0 4px 15px rgba(242, 113, 37, 0.3);
+}
+
+.regulation-modal-icon i {
+  font-size: 1.8rem;
+  color: var(--primary-orange);
+  text-shadow: 0 0 3px white;
+}
+
+.regulation-number {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark));
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  box-shadow: 0 3px 8px rgba(242, 113, 37, 0.3);
+  flex-shrink: 0;
+}
+
+.regulation-item {
+  padding: 1rem;
+  background: linear-gradient(135deg, #fff, #fefefe);
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-orange);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.regulation-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.bg-orange {
+  background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark)) !important;
+}
+
+.btn-outline-orange {
+  color: var(--primary-orange);
+  border-color: var(--primary-orange);
+  background: transparent;
+}
+
+.btn-outline-orange:hover {
+  color: white;
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+}
+
+.modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.modal-header.bg-orange {
+  background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark)) !important;
 }

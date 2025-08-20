@@ -1,17 +1,24 @@
-/* Styles for the modern navbar */
+/* Styles for the modern navbar with orange theme */
 .navbar-custom {
     background-color: #ffffff;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
     padding: 15px 0;
     transition: all 0.3s ease;
+    border-bottom: 3px solid #f27125;
 }
 
 .navbar-brand-custom {
     font-weight: 700;
     font-size: 1.5rem;
-    color: #3498db !important;
+    color: #f27125 !important;
     display: flex;
     align-items: center;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand-custom:hover {
+    color: #d85e1c !important;
+    transform: scale(1.05);
 }
 
 .navbar-brand-custom img {
@@ -29,14 +36,14 @@
 }
 
 .nav-link-custom:hover {
-    color: #3498db !important;
-    background-color: rgba(52, 152, 219, 0.05);
+    color: #f27125 !important;
+    background-color: rgba(242, 113, 37, 0.05);
     transform: translateY(-2px);
 }
 
 .nav-link-custom.active {
-    color: #3498db !important;
-    background-color: rgba(52, 152, 219, 0.1);
+    color: #f27125 !important;
+    background-color: rgba(242, 113, 37, 0.1);
 }
 
 .nav-link-custom.active::after {
@@ -46,17 +53,22 @@
     left: 16px;
     right: 16px;
     height: 2px;
-    background-color: #3498db;
+    background-color: #f27125;
     border-radius: 2px;
 }
 
 .navbar-toggler-custom {
     border: none;
     padding: 0;
+    color: #f27125;
 }
 
 .navbar-toggler-custom:focus {
     box-shadow: none;
+}
+
+.navbar-toggler-custom .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23f27125' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 .notification-badge {
@@ -69,6 +81,13 @@
     background-color: #e74c3c;
     color: white;
     transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }
 
 .nav-item-notification {
@@ -77,8 +96,8 @@
 
 .btn-login {
     background-color: transparent;
-    color: #3498db;
-    border: 1px solid #3498db;
+    color: #f27125;
+    border: 1px solid #f27125;
     border-radius: 8px;
     padding: 8px 20px;
     font-weight: 500;
@@ -86,14 +105,14 @@
 }
 
 .btn-login:hover {
-    background-color: #3498db;
+    background-color: #f27125;
     color: white;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
+    box-shadow: 0 4px 8px rgba(242, 113, 37, 0.2);
 }
 
 .btn-register {
-    background-color: #3498db;
+    background-color: #f27125;
     color: white;
     border: none;
     border-radius: 8px;
@@ -103,9 +122,9 @@
 }
 
 .btn-register:hover {
-    background-color: #2980b9;
+    background-color: #d85e1c;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(41, 128, 185, 0.3);
+    box-shadow: 0 4px 8px rgba(216, 94, 28, 0.3);
 }
 
 .user-profile-menu {
@@ -122,25 +141,27 @@
 }
 
 .user-profile-toggle:hover {
-    background-color: rgba(52, 152, 219, 0.1);
+    background-color: rgba(242, 113, 37, 0.1);
 }
 
 .user-avatar {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background-color: #3498db;
+    background: linear-gradient(135deg, #f27125, #ff8a3e);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     margin-right: 8px;
+    box-shadow: 0 2px 8px rgba(242, 113, 37, 0.3);
 }
 
 .user-name {
     margin-right: 8px;
     font-weight: 500;
+    color: #2c3e50;
 }
 
 .dropdown-menu-custom {
@@ -148,6 +169,7 @@
     border-radius: 12px;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
+    border-top: 3px solid #f27125;
 }
 
 .dropdown-item-custom {
@@ -157,13 +179,17 @@
 }
 
 .dropdown-item-custom:hover {
-    background-color: rgba(52, 152, 219, 0.1);
-    color: #3498db;
+    background-color: rgba(242, 113, 37, 0.1);
+    color: #f27125;
 }
 
 .dropdown-item-custom i {
     margin-right: 10px;
     color: #7f8c8d;
+}
+
+.dropdown-item-custom:hover i {
+    color: #f27125;
 }
 
 .dropdown-divider-custom {
@@ -184,17 +210,26 @@
     color: #e74c3c;
 }
 
+/* Orange accent elements */
+.navbar-accent {
+    background: linear-gradient(90deg, #f27125, #ff8a3e);
+    height: 3px;
+    width: 100%;
+}
+
 /* Responsive adjustments */
 @media (max-width: 991px) {
     .navbar-collapse {
         margin-top: 15px;
-        padding: 10px;
+        padding: 15px;
         border-radius: 12px;
         background-color: #f8f9fa;
+        border: 1px solid rgba(242, 113, 37, 0.1);
     }
     
     .nav-link-custom {
         padding: 10px 15px !important;
+        margin: 2px 0;
     }
     
     .nav-link-custom.active::after {
@@ -214,4 +249,22 @@
     .navbar-buttons .btn {
         margin: 5px 0;
     }
+}
+
+/* Additional orange theme elements */
+.navbar-search {
+    position: relative;
+}
+
+.navbar-search input {
+    border: 1px solid rgba(242, 113, 37, 0.3);
+    border-radius: 20px;
+    padding: 8px 16px;
+    background-color: rgba(242, 113, 37, 0.05);
+}
+
+.navbar-search input:focus {
+    border-color: #f27125;
+    box-shadow: 0 0 0 0.2rem rgba(242, 113, 37, 0.25);
+    background-color: white;
 }

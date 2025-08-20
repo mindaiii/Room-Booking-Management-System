@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="~/css/booking-details.css" />
     <link rel="stylesheet" href="~/css/booking-cancel.css" />
     <link rel="stylesheet" href="~/css/navbar.css" />
+    <link rel="stylesheet" href="~/css/homepage.css" />
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
@@ -75,6 +76,11 @@
                                     }
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-custom @(ViewContext.RouteData.Values["Page"]?.ToString().Contains("/Regulations") == true ? "active" : "")" asp-page="/Regulations/Index">
+                                    <i class="bi bi-clipboard-check me-1"></i> Quy định
+                                </a>
+                            </li>
                         }
                         else
                         {
@@ -84,8 +90,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-link-custom" href="#">
-                                    <i class="bi bi-envelope me-1"></i> Liên hệ
+                                <a class="nav-link nav-link-custom @(ViewContext.RouteData.Values["Page"]?.ToString().Contains("/Regulations") == true ? "active" : "")" asp-page="/Regulations/Index">
+                                    <i class="bi bi-clipboard-check me-1"></i> Quy định
                                 </a>
                             </li>
                         }
@@ -103,35 +109,149 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted mt-5">
-        <div class="container py-4">
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <h5>FPTU Room Booking System</h5>
-                    <p class="small">Hệ thống đặt phòng thông minh cho sinh viên và giảng viên FPT University</p>
+    <!-- Regulations Modal -->
+    <div class="modal fade" id="regulationsModal" tabindex="-1" aria-labelledby="regulationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-orange text-white border-0">
+                    <h5 class="modal-title fw-bold" id="regulationsModalLabel">
+                        <i class="bi bi-clipboard-check me-2"></i>
+                        Quy định sử dụng hệ thống
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <h5>Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-muted">Điều khoản sử dụng</a></li>
-                        <li><a href="#" class="text-muted">Chính sách bảo mật</a></li>
-                        <li><a href="#" class="text-muted">Hướng dẫn sử dụng</a></li>
-                    </ul>
+                <div class="modal-body p-4">
+                    <div class="text-center mb-4">
+                        <div class="regulation-modal-icon mx-auto mb-3">
+                            <i class="bi bi-info-circle text-orange"></i>
+                        </div>
+                        <h6 class="text-orange fw-bold">Chào mừng bạn đến với FPTU Room Booking System!</h6>
+                        <p class="text-muted mb-0">Vui lòng đọc quy định sử dụng dưới đây:</p>
+                    </div>
+
+                    <div class="regulation-summary">
+                        <div class="regulation-item mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="regulation-number me-3">1</div>
+                                <div>
+                                    <h6 class="fw-semibold text-dark mb-1">Quyền sử dụng</h6>
+                                    <p class="text-muted mb-0 small">Học sinh, sinh viên và giảng viên có quyền đặt phòng. <span class="text-warning fw-semibold">Lịch đặt chỉ có hiệu lực khi được Admin duyệt.</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="regulation-item mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="regulation-number me-3">2</div>
+                                <div>
+                                    <h6 class="fw-semibold text-dark mb-1">Trách nhiệm</h6>
+                                    <p class="text-muted mb-0 small">Sử dụng đúng mục đích và chủ động huỷ lịch khi không còn nhu cầu.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="regulation-item mb-3">
+                            <div class="d-flex align-items-start">
+                                <div class="regulation-number me-3">3</div>
+                                <div>
+                                    <h6 class="fw-semibold text-dark mb-1">Quy định huỷ lịch</h6>
+                                    <p class="text-muted mb-0 small">Lịch có thể bị huỷ trong các trường hợp: tiếp đãi đối tác, lịch thi đột xuất, hội thảo cần thiết.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <a href="/Regulations" class="btn btn-outline-orange btn-sm me-2" onclick="closeRegulationsModal()">
+                                <i class="bi bi-eye me-1"></i>
+                                Xem thêm >
+                            </a>
+                            <button type="button" class="btn btn-orange btn-sm" data-bs-dismiss="modal" onclick="markRegulationsAsSeen()">
+                                <i class="bi bi-check-circle me-1"></i>
+                                Đã hiểu
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <h5>Liên hệ</h5>
-                    <ul class="list-unstyled">
-                        <li class="small"><i class="bi bi-geo-alt me-2"></i>FPT University, Khu CNC Hòa Lạc, Km29 Đại lộ Thăng Long</li>
-                        <li class="small"><i class="bi bi-telephone me-2"></i>(024) 7300 5588</li>
-                        <li class="small"><i class="bi bi-envelope me-2"></i>daihoc.hcm@fpt.edu.vn</li>
-                    </ul>
-                </div>
-            </div>
-            <hr />
-            <div class="text-center">
-                &copy; 2025 - FPTU Room Booking System - <a asp-area="" asp-page="/Privacy">Privacy</a>
             </div>
         </div>
+    </div>
+
+    <footer class="footer bg-dark text-light mt-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-calendar-check text-orange fs-3 me-3"></i>
+                        <h5 class="mb-0 text-orange">FPTU Room Booking System</h5>
+                    </div>
+                    <p class="text-muted mb-3">
+                        Hệ thống đặt phòng thông minh cho sinh viên và giảng viên FPT University. 
+                        Nền tảng hiện đại giúp bạn dễ dàng quản lý và đặt phòng học một cách hiệu quả.
+                    </p>
+                    <div class="d-flex">
+                        <a href="#" class="text-light me-3 fs-5"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-light me-3 fs-5"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-light me-3 fs-5"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-light fs-5"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="text-orange mb-3">Dịch vụ</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-muted footer-link">Đặt phòng học</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted footer-link">Đặt phòng hội thảo</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted footer-link">Đặt phòng lab</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted footer-link">Quản lý lịch</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="text-orange mb-3">Hỗ trợ</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-muted footer-link">Điều khoản sử dụng</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted footer-link">Chính sách bảo mật</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted footer-link">Hướng dẫn sử dụng</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted footer-link">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h6 class="text-orange mb-3">Liên hệ</h6>
+                    <div class="contact-info">
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="bi bi-geo-alt text-orange me-3 mt-1"></i>
+                            <span class="text-muted">FPT University, Khu CNC Hòa Lạc, Km29 Đại lộ Thăng Long, Thạch Thất, Hà Nội</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-telephone text-orange me-3"></i>
+                            <span class="text-muted">(024) 7300 5588</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-envelope text-orange me-3"></i>
+                            <span class="text-muted">daihoc.hcm@fpt.edu.vn</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-clock text-orange me-3"></i>
+                            <span class="text-muted">Thứ 2 - Thứ 6: 8:00 - 17:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-secondary my-4" />
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 text-muted">
+                        &copy; 2025 FPTU Room Booking System. All rights reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="d-flex justify-content-md-end align-items-center">
+                        <span class="text-muted me-3">Powered by</span>
+                        <span class="text-orange fw-bold">FPT University</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Orange accent line -->
+        <div class="w-100" style="height: 4px; background: linear-gradient(90deg, #f27125, #ff8a3e);"></div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -143,6 +263,57 @@
     @if (User.Identity?.IsAuthenticated == true)
     {
         <script src="~/js/notification-connection.js" asp-append-version="true"></script>
+        <script>
+            // Show regulations modal once per day for each authenticated user
+            document.addEventListener('DOMContentLoaded', function() {
+                // Get current user info and today's date
+                const currentUser = '@(User.Identity?.IsAuthenticated == true ? User.FindFirst("UserId")?.Value ?? User.Identity.Name : "anonymous")';
+                const today = new Date().toDateString();
+                const storageKey = `regulationsSeenToday_${currentUser}`;
+                
+                // Show modal if user hasn't seen regulations today
+                if (!localStorage.getItem(storageKey) || localStorage.getItem(storageKey) !== today) {
+                    setTimeout(function() {
+                        var regulationsModal = new bootstrap.Modal(document.getElementById('regulationsModal'));
+                        regulationsModal.show();
+                    }, 1500); // Show after 1.5 second delay for better UX
+                }
+            });
+            
+            // Function to mark regulations as seen for today (per user)
+            function markRegulationsAsSeen() {
+                const currentUser = '@(User.Identity?.IsAuthenticated == true ? User.FindFirst("UserId")?.Value ?? User.Identity.Name : "anonymous")';
+                const today = new Date().toDateString();
+                const storageKey = `regulationsSeenToday_${currentUser}`;
+                localStorage.setItem(storageKey, today);
+            }
+            
+            // Function to close modal when "Xem thêm" is clicked
+            function closeRegulationsModal() {
+                const currentUser = '@(User.Identity?.IsAuthenticated == true ? User.FindFirst("UserId")?.Value ?? User.Identity.Name : "anonymous")';
+                const today = new Date().toDateString();
+                const storageKey = `regulationsSeenToday_${currentUser}`;
+                localStorage.setItem(storageKey, today);
+                var regulationsModal = bootstrap.Modal.getInstance(document.getElementById('regulationsModal'));
+                if (regulationsModal) {
+                    regulationsModal.hide();
+                }
+            }
+            
+            // Debug function to test modal
+            window.testRegulationsModal = function() {
+                const currentUser = '@(User.Identity?.IsAuthenticated == true ? User.FindFirst("UserId")?.Value ?? User.Identity.Name : "anonymous")';
+                const storageKey = `regulationsSeenToday_${currentUser}`;
+                localStorage.removeItem(storageKey);
+                location.reload();
+            };
+            
+            // Debug function to show all regulations storage
+            window.showRegulationsStorage = function() {
+                const keys = Object.keys(localStorage).filter(key => key.startsWith('regulationsSeenToday_'));
+                console.log('Regulations storage:', keys.map(key => ({ key, value: localStorage.getItem(key) })));
+            };
+        </script>
     }
 
     @await RenderSectionAsync("Scripts", required: false)

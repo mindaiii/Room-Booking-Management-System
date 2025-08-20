@@ -1,0 +1,360 @@
+@page
+@model BookingManagement.User.Razor.Pages.Regulations.IndexModel
+@{
+    ViewData["Title"] = "Quy định sử dụng";
+}
+
+<div class="container my-5">
+    <!-- Header Section -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10">
+            <div class="text-center mb-4">
+                <div class="regulations-icon mx-auto mb-3">
+                    <i class="bi bi-clipboard-check text-white"></i>
+                </div>
+                <h1 class="display-5 fw-bold text-orange mb-3">Quy định sử dụng hệ thống</h1>
+                <p class="lead text-muted">FPTU Room Booking System</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="regulations-content card border-0 shadow-lg">
+                <div class="card-body p-5">
+                    <!-- Title with Icon -->
+                    <div class="text-center mb-5">
+                        <h2 class="h3 fw-bold text-orange mb-3">
+                            <i class="bi bi-book me-2"></i>
+                            QUY ĐỊNH SỬ DỤNG HỆ THỐNG BOOKING PHÒNG HỌC
+                        </h2>
+                        <div class="title-underline mx-auto"></div>
+                    </div>
+
+                    <!-- Section 1: Quyền sử dụng -->
+                    <div class="regulation-section mb-5">
+                        <div class="section-header d-flex align-items-center mb-4">
+                            <div class="section-number-roman">I</div>
+                            <h3 class="section-title mb-0">Quyền sử dụng</h3>
+                        </div>
+                        <div class="section-content">
+                            <ul class="regulation-list">
+                                <li>Học sinh, sinh viên và giảng viên của trường có quyền đặt phòng học thông qua hệ thống.</li>
+                                <li class="text-danger fw-semibold">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>
+                                    Lịch đặt phòng chỉ có hiệu lực khi được Admin duyệt.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Trách nhiệm -->
+                    <div class="regulation-section mb-5">
+                        <div class="section-header d-flex align-items-center mb-4">
+                            <div class="section-number-roman">II</div>
+                            <h3 class="section-title mb-0">Trách nhiệm khi đặt phòng</h3>
+                        </div>
+                        <div class="section-content">
+                            <ul class="regulation-list">
+                                <li>Người đặt phòng phải sử dụng đúng mục đích đã đăng ký.</li>
+                                <li>Khi không còn nhu cầu, cần chủ động huỷ lịch để nhường cho người khác.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Quy định huỷ lịch -->
+                    <div class="regulation-section mb-5">
+                        <div class="section-header d-flex align-items-center mb-4">
+                            <div class="section-number-roman">III</div>
+                            <h3 class="section-title mb-0">Quy định huỷ lịch bởi hệ thống</h3>
+                        </div>
+                        <div class="section-content">
+                            <p class="mb-4 text-content">Trong một số tình huống đặc biệt, để đảm bảo lợi ích chung, lịch đặt phòng đã được duyệt có thể bị huỷ.</p>
+                            
+                            <div class="priority-section mb-4">
+                                <h5 class="text-primary mb-4">
+                                    <i class="bi bi-list-ol me-2"></i>
+                                    Các trường hợp ưu tiên huỷ theo thứ tự:
+                                </h5>
+                                <ol class="priority-list">
+                                    <li class="priority-item">
+                                        <span class="priority-badge priority-high">1</span>
+                                        <span class="priority-text">Tiếp đãi đối tác quan trọng của Nhà trường.</span>
+                                    </li>
+                                    <li class="priority-item">
+                                        <span class="priority-badge priority-medium">2</span>
+                                        <span class="priority-text">Lịch thi được sắp xếp đột xuất (không trùng khớp với lịch thi đã công bố trước đó).</span>
+                                    </li>
+                                    <li class="priority-item">
+                                        <span class="priority-badge priority-low">3</span>
+                                        <span class="priority-text">Hội thảo hoặc buổi học mà giảng viên cần tổ chức gấp.</span>
+                                    </li>
+                                </ol>
+                            </div>
+
+                            <div class="cancellation-notice p-4 border-start border-info border-4 bg-light rounded mb-4">
+                                <h5 class="text-info mb-3">
+                                    <i class="bi bi-arrow-right me-2"></i>
+                                    Khi bị huỷ lịch:
+                                </h5>
+                                <ul class="regulation-list mb-0">
+                                    <li>Người đặt phòng sẽ nhận thông báo kèm lý do.</li>
+                                    <li>Sinh viên và giảng viên phải chấp nhận vì đây là quy định sử dụng phòng học công cộng.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 4: Cam kết -->
+                    <div class="regulation-section">
+                        <div class="section-header d-flex align-items-center mb-4">
+                            <div class="section-number-roman">IV</div>
+                            <h3 class="section-title mb-0">Cam kết chung</h3>
+                        </div>
+                        <div class="section-content">
+                            <div class="commitment-box p-4 bg-light rounded border border-secondary">
+                                <ul class="regulation-list mb-0">
+                                    <li class="fw-semibold text-content">Tôn trọng và tuân thủ quy định nhằm đảm bảo quyền lợi chung cho sinh viên, giảng viên và toàn bộ cộng đồng học tập.</li>
+                                    <li class="fw-semibold text-content">Bảo vệ tài sản, cơ sở vật chất khi sử dụng phòng học.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="regulation-footer text-center mt-5 pt-4 border-top">
+                        <p class="text-muted mb-3">
+                            <i class="bi bi-info-circle me-2"></i>
+                            Cảm ơn bạn đã đọc và tuân thủ quy định!
+                        </p>
+                        <a href="/" class="btn btn-orange btn-lg">
+                            <i class="bi bi-house-door me-2"></i>
+                            Về trang chủ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Regulations specific styles */
+.regulations-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(242, 113, 37, 0.4);
+    border: 3px solid white;
+}
+
+.regulations-icon i {
+    font-size: 2.5rem;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.title-underline {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-orange), var(--primary-orange-light));
+    border-radius: 2px;
+}
+
+.regulations-content {
+    background: linear-gradient(135deg, #fff, #fff8f5);
+    border-left: 5px solid var(--primary-orange);
+}
+
+.section-header {
+    margin-bottom: 1.5rem;
+}
+
+.section-number-roman {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark));
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-right: 1.5rem;
+    box-shadow: 0 4px 15px rgba(242, 113, 37, 0.3);
+    border: 2px solid white;
+}
+
+.section-title {
+    color: var(--primary-orange);
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.regulation-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.regulation-list li {
+    position: relative;
+    padding-left: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.regulation-list li::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--primary-orange);
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.text-content {
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.priority-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.priority-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1.2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-left: 4px solid transparent;
+}
+
+.priority-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.priority-item:nth-child(1) {
+    border-left-color: #dc3545;
+}
+
+.priority-item:nth-child(2) {
+    border-left-color: var(--primary-orange);
+}
+
+.priority-item:nth-child(3) {
+    border-left-color: #17a2b8;
+}
+
+.priority-badge {
+    min-width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    margin-right: 1.5rem;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.priority-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.priority-high {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+}
+
+.priority-medium {
+    background: linear-gradient(135deg, var(--primary-orange), var(--primary-orange-dark));
+}
+
+.priority-low {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+}
+
+.cancellation-notice {
+    background: linear-gradient(135deg, #e3f2fd, #f8f9fa) !important;
+    border-radius: 10px;
+}
+
+.commitment-box {
+    background: linear-gradient(135deg, #f8f9fa, #ffffff) !important;
+    border-radius: 10px;
+}
+
+.bg-orange-light {
+    background: var(--orange-light, #fff8f5);
+}
+
+.regulation-footer {
+    border-top: 2px solid rgba(242, 113, 37, 0.2) !important;
+}
+
+/* Responsive */
+@@media (max-width: 768px) {
+    .regulations-content {
+        margin: 0 -15px;
+    }
+    
+    .card-body {
+        padding: 2rem !important;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .section-number-roman {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.2rem;
+    }
+    
+    .regulation-list li {
+        font-size: 1rem;
+        padding-left: 2rem;
+    }
+    
+    .text-content {
+        font-size: 1rem;
+    }
+    
+    .priority-item {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    .priority-badge {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    
+    .priority-text {
+        font-size: 1rem;
+    }
+}
+</style>

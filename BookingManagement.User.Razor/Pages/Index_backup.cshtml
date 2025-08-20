@@ -210,6 +210,41 @@
     </div>
 </div>
 
+<!-- Call to Action Section -->
+<div class="container-fluid bg-light py-5">
+    <div class="container">
+        <div class="cta-section">
+            <div class="cta-card bg-gradient text-white rounded-4 p-5 text-center">
+                <h2 class="display-5 fw-bold mb-4">Sẵn sàng bắt đầu?</h2>
+                <p class="lead mb-4">
+                    Tham gia cùng hàng nghìn sinh viên và giảng viên FPT University đang sử dụng 
+                    hệ thống đặt phòng thông minh của chúng tôi.
+                </p>
+                <div class="cta-buttons">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-page="/RoomList/Index" class="btn btn-light btn-lg me-3">
+                            <i class="bi bi-search me-2"></i>Tìm phòng trống
+                        </a>
+                        <a asp-page="/BookingRoom/Index" class="btn btn-outline-light btn-lg">
+                            <i class="bi bi-calendar3 me-2"></i>Xem lịch đặt
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-page="/Login/Index" class="btn btn-light btn-lg me-3">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Đăng nhập ngay
+                        </a>
+                        <a asp-page="/Register/Index" class="btn btn-outline-light btn-lg">
+                            <i class="bi bi-person-plus me-2"></i>Tạo tài khoản
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Statistics Section -->
 <div class="stats-section py-5">
     <div class="container">
