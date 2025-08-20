@@ -59,11 +59,25 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 // Cấu hình để phục vụ file từ thư mục chia sẻ
-app.UseStaticFiles(new StaticFileOptions
+var sharedImagesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", builder.Configuration["SharedImagesFolderPath"]);
+if (Directory.Exists(sharedImagesPath))
 {
-    FileProvider = new PhysicalFileProvider(builder.Configuration["SharedImagesFolderPath"]),
-    RequestPath = "/shared-images"
-});
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(sharedImagesPath),
+        RequestPath = "/shared-images"
+    });
+}
+else
+{
+    // Tạo thư mục nếu chưa tồn tại
+    Directory.CreateDirectory(sharedImagesPath);
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(sharedImagesPath),
+        RequestPath = "/shared-images"
+    });
+}
 
 app.UseRouting();
 

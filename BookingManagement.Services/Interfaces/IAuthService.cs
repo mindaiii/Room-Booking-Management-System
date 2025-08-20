@@ -13,6 +13,9 @@ namespace BookingManagement.Services.Interfaces
     {
         Task<(bool Success, string Role)> AuthenticateAsync(string email, string password, HttpContext httpContext, bool rememberMe = false);
         Task<RegisterResultDto> RegisterUserAsync(RegisterDto registerDto);
+        Task<RegisterResultDto> InitiateRegistrationAsync(RegisterDto registerDto);
+        Task<RegisterResultDto> CompleteRegistrationAsync(VerificationDto verificationDto);
+        Task<bool> ResendVerificationCodeAsync(string email);
         Task SignOutAsync(HttpContext httpContext);
         Task<User?> GetUserByEmailAsync(string email);
         Task<Role?> GetRoleByIdAsync(int roleId);

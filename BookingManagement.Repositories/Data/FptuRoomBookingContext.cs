@@ -36,21 +36,13 @@ public partial class FptuRoomBookingContext : DbContext
     public virtual DbSet<SpecialSchedule> SpecialSchedules { get; set; }
 
     public virtual DbSet<BlockedTimeSlot> BlockedTimeSlots { get; set; }
-    private string GetConnectionString()
-    {
-        IConfiguration config = new ConfigurationBuilder()
-             .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json", true, true)
-                    .Build();
-        var strConn = config["ConnectionStrings:DefaultConnection"];
 
-        return strConn;
-    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer(GetConnectionString());
+            // Fallback connection string for development/testing
+            optionsBuilder.UseSqlServer("Server=.;Database=fptu_room_booking;User Id=sa;Password=123456;TrustServerCertificate=True;");
         }
     }
 

@@ -49,18 +49,16 @@ namespace BookingManagement.User.Razor.Pages.Register
                 return Page();
             }
 
-            var result = await _authService.RegisterUserAsync(Input);
+            // Thay vì đăng ký trực tiếp, bắt đầu quá trình verification
+            var result = await _authService.InitiateRegistrationAsync(Input);
 
             if (result.Success)
             {
-                _logger.LogInformation($"Người dùng {Input.Email} đăng ký thành công");
-                
-                // Đăng nhập người dùng sau khi đăng ký thành công
-                await _authService.AuthenticateAsync(Input.Email, Input.Password, HttpContext);
-                return LocalRedirect(returnUrl);
+                _logger.LogInformation($"Verification email sent to {Input.Email}");
+                return RedirectToPage("/Register/Verification", new { email = Input.Email });
             }
 
-            _logger.LogWarning($"Đăng ký thất bại cho người dùng {Input.Email}: {result.Message}");
+            _logger.LogWarning($"Registration initiation failed for {Input.Email}: {result.Message}");
             ModelState.AddModelError(string.Empty, result.Message);
             return Page();
         }

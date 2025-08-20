@@ -24,6 +24,11 @@ namespace BookingManagement.Repositories.Extensions
             services.AddScoped<ITimeSlotRepository, TimeSlotRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             
+            // Đăng ký Time Management repositories
+            services.AddScoped<IOperationalHoursRepository, OperationalHoursRepository>();
+            services.AddScoped<ISpecialScheduleRepository, SpecialScheduleRepository>();
+            services.AddScoped<IBlockedTimeSlotRepository, BlockedTimeSlotRepository>();
+            
             // Đăng ký Unit of Work
             services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 

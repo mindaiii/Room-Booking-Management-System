@@ -6,8 +6,8 @@
 
 <div class="row justify-content-center mt-5">
     <div class="col-md-6">
-        <div class="card shadow">
-            <div class="card-header bg-primary text-white">
+        <div class="card shadow-lg" style="border-radius: 15px;">
+            <div class="card-header text-white" style="background-color: #f27125; border-radius: 15px 15px 0 0;">
                 <h3 class="text-center mb-0">FPTU-RBS</h3>
                 <p class="text-center mb-0">Đăng ký tài khoản</p>
             </div>
@@ -24,7 +24,7 @@
 
                     <div class="mb-3">
                         <label asp-for="Input.Email" class="form-label">Email</label>
-                        <input asp-for="Input.Email" class="form-control" placeholder="Nhập email" />
+                        <input asp-for="Input.Email" class="form-control" placeholder="Nhập email @@fpt.edu.vn" />
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
 
@@ -41,17 +41,30 @@
                     </div>
 
                     <div class="d-grid gap-2 mb-3">
-                        <button type="submit" class="btn btn-primary">Đăng ký</button>
+                        <button type="submit" class="btn text-white" style="background-color: #f27125;">Đăng ký</button>
                     </div>
 
                     <div class="text-center">
-                        <p>Đã có tài khoản? <a asp-page="/Login/Index">Đăng nhập</a></p>
+                        <p>Đã có tài khoản? <a asp-page="/Login/Index" style="color: #f27125; font-weight: bold;">Đăng nhập</a></p>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+@section Styles {
+    <style>
+        .form-control:focus {
+            border-color: #f27125;
+            box-shadow: 0 0 0 0.2rem rgba(242, 113, 37, 0.25);
+        }
+        
+        a:hover {
+            color: #d45a1a !important;
+        }
+    </style>
+}
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

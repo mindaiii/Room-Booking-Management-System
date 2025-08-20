@@ -40,10 +40,11 @@ namespace BookingManagement.Repositories.Base
             return entity;
         }
 
-        public virtual async Task UpdateAsync(T entity)
+        public virtual Task UpdateAsync(T entity)
         {
             _dbSet.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
+            return Task.CompletedTask;
         }
 
         public virtual async Task DeleteAsync(int id)

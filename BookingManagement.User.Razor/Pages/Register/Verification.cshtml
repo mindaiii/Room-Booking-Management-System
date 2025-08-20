@@ -1,0 +1,231 @@
+@page
+@model BookingManagement.User.Razor.Pages.Register.VerificationModel
+@{
+    ViewData["Title"] = "Xác nhận đăng ký";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card shadow-lg">
+            <div class="card-header text-white text-center" style="background: linear-gradient(135deg, #f27125, #ff8a50);">
+                <h3 class="mb-0">
+                    <i class="bi bi-shield-check me-2"></i>
+                    Xác nhận đăng ký
+                </h3>
+                <p class="mb-0 mt-2">Vui lòng nhập mã xác nhận được gửi đến email của bạn</p>
+            </div>
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <div class="bg-light rounded-circle mx-auto mb-3" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-envelope-check text-primary" style="font-size: 2rem;"></i>
+                    </div>
+                    <p class="text-muted">
+                        Mã xác nhận đã được gửi đến:<br>
+                        <strong class="text-primary">@Model.Email</strong>
+                    </p>
+                </div>
+
+                <form method="post" id="verificationForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="Input.Email" />
+
+                    <div class="mb-4">
+                        <label asp-for="Input.VerificationCode" class="form-label">Mã xác nhận</label>
+                        <div class="input-group">
+                            <input asp-for="Input.VerificationCode" 
+                                   class="form-control form-control-lg text-center" 
+                                   placeholder="000000" 
+                                   maxlength="6" 
+                                   style="font-size: 1.5rem; letter-spacing: 0.3rem; font-family: monospace;" 
+                                   autocomplete="off" />
+                            <button type="button" class="btn btn-outline-secondary" id="resendButton" onclick="resendCode()" disabled>
+                                <span id="resendText" style="display: none;">Gửi lại mã</span>
+                                <span id="countdown">Gửi lại mã (<span id="timer">15</span>s)</span>
+                            </button>
+                        </div>
+                        <span asp-validation-for="Input.VerificationCode" class="text-danger"></span>
+                        <small class="text-muted">Nhập 6 chữ số được gửi đến email của bạn</small>
+                    </div>
+
+                    <div class="d-grid gap-2 mb-4">
+                        <button type="submit" class="btn btn-lg text-white" style="background-color: #f27125; border-color: #f27125;">
+                            <i class="bi bi-check-circle me-2"></i>
+                            Xác nhận đăng ký
+                        </button>
+                    </div>
+                </form>
+
+                <div class="text-center">
+                    <p class="text-muted mb-2">Không nhận được mã?</p>
+                </div>
+
+                <div class="alert alert-info mt-4" role="alert">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <strong>Lưu ý:</strong> Mã xác nhận có hiệu lực trong 5 phút.
+                </div>
+
+                <div class="text-center mt-4">
+                    <a asp-page="/Register/Index" class="btn btn-link">
+                        <i class="bi bi-arrow-left me-1"></i>
+                        Quay lại đăng ký
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast container for notifications -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+    <div id="resendToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="bi bi-check-circle-fill text-success me-2"></i>
+            <strong class="me-auto">Thông báo</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toastMessage">
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <style>
+        .bg-primary, .btn-primary {
+            background-color: #f27125 !important;
+            border-color: #f27125 !important;
+        }
+        .text-primary {
+            color: #f27125 !important;
+        }
+        .btn-outline-primary {
+            color: #f27125 !important;
+            border-color: #f27125 !important;
+        }
+        .btn-outline-primary:hover {
+            background-color: #f27125 !important;
+            color: white !important;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 15px;
+        }
+        
+        .card-header {
+            border-radius: 15px 15px 0 0 !important;
+            background: linear-gradient(135deg, #f27125, #ff8a50) !important;
+        }
+        
+        .form-control:focus {
+            border-color: #f27125;
+            box-shadow: 0 0 0 0.2rem rgba(242, 113, 37, 0.25);
+        }
+        
+        #resendButton:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        let countdownTimer;
+        let countdownSeconds = 15;
+
+        // Auto focus on verification code input
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('Input_VerificationCode').focus();
+            
+            // Format input - only allow numbers
+            document.getElementById('Input_VerificationCode').addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+            
+            // Start initial countdown
+            startCountdown();
+        });
+
+        function resendCode() {
+            const resendButton = document.getElementById('resendButton');
+            const email = document.querySelector('input[name="Input.Email"]').value;
+            
+            // Disable button and start countdown
+            resendButton.disabled = true;
+            startCountdown();
+            
+            // Send AJAX request
+            fetch('/Register/Verification?handler=ResendCode', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(data.message, 'success');
+                } else {
+                    showToast(data.message, 'error');
+                    // Re-enable button if failed
+                    clearInterval(countdownTimer);
+                    resetResendButton();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('Có lỗi xảy ra. Vui lòng thử lại.', 'error');
+                clearInterval(countdownTimer);
+                resetResendButton();
+            });
+        }
+
+        function startCountdown() {
+            countdownSeconds = 15;
+            document.getElementById('resendText').style.display = 'none';
+            document.getElementById('countdown').style.display = 'inline';
+            
+            countdownTimer = setInterval(function() {
+                countdownSeconds--;
+                document.getElementById('timer').textContent = countdownSeconds;
+                
+                if (countdownSeconds <= 0) {
+                    clearInterval(countdownTimer);
+                    resetResendButton();
+                }
+            }, 1000);
+        }
+
+        function resetResendButton() {
+            const resendButton = document.getElementById('resendButton');
+            resendButton.disabled = false;
+            document.getElementById('resendText').style.display = 'inline';
+            document.getElementById('countdown').style.display = 'none';
+        }
+
+        function showToast(message, type) {
+            const toastElement = document.getElementById('resendToast');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastHeader = toastElement.querySelector('.toast-header i');
+            
+            toastMessage.textContent = message;
+            
+            // Change icon based on type
+            if (type === 'success') {
+                toastHeader.className = 'bi bi-check-circle-fill text-success me-2';
+            } else {
+                toastHeader.className = 'bi bi-exclamation-triangle-fill text-danger me-2';
+            }
+            
+            const toast = new bootstrap.Toast(toastElement, {
+                autohide: true,
+                delay: 5000
+            });
+            toast.show();
+        }
+    </script>
+}

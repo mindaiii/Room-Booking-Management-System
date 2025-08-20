@@ -17,6 +17,10 @@ namespace BookingManagement.Services.Extensions
             services.AddScoped<ITimeSlotService, TimeSlotService>();
             services.AddScoped<INotificationService, NotificationService>();
             
+            // Add new verification services
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IVerificationService, VerificationService>();
+            
             // Add Time Management services
             services.AddScoped<IOperationalHoursService, OperationalHoursService>();
             services.AddScoped<ISpecialScheduleService, SpecialScheduleService>();
@@ -24,6 +28,9 @@ namespace BookingManagement.Services.Extensions
             
             // Add SignalR service
             services.AddScoped<ISignalRService, SignalRService>();
+            
+            // Add Memory Cache for verification codes
+            services.AddMemoryCache();
             
             return services;
         }

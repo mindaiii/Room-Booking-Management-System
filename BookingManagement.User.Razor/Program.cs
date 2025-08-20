@@ -1,4 +1,5 @@
 using BookingManagement.Repositories.Extensions;
+using BookingManagement.Services.Extensions;
 using BookingManagement.Services.Interfaces;
 using BookingManagement.Services.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -13,12 +14,8 @@ builder.Services.AddRazorPages();
 // Đăng ký Repository service
 builder.Services.AddRepositories(builder.Configuration);
 
-// Đăng ký các services
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IBookingService, BookingService>();
-builder.Services.AddScoped<ITimeSlotService, TimeSlotService>();
-builder.Services.AddScoped<IRoomService, RoomService>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
+// Đăng ký các services (sử dụng extension method)
+builder.Services.AddApplicationServices();
 
 // Đăng ký SignalR
 builder.Services.AddSignalR();
@@ -57,11 +54,26 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 // Cấu hình để phục vụ file từ thư mục chia sẻ
-app.UseStaticFiles(new StaticFileOptions
+var sharedImagesFolderPath = builder.Configuration["SharedImagesFolderPath"] ?? "SharedAssets\\images";
+var sharedImagesPath = Path.Combine(Directory.GetCurrentDirectory(), "..", sharedImagesFolderPath);
+if (Directory.Exists(sharedImagesPath))
 {
-    FileProvider = new PhysicalFileProvider(builder.Configuration["SharedImagesFolderPath"]),
-    RequestPath = "/shared-images"
-});
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(sharedImagesPath),
+        RequestPath = "/shared-images"
+    });
+}
+else
+{
+    // Tạo thư mục nếu chưa tồn tại
+    Directory.CreateDirectory(sharedImagesPath);
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(sharedImagesPath),
+        RequestPath = "/shared-images"
+    });
+}
 
 app.UseRouting();
 

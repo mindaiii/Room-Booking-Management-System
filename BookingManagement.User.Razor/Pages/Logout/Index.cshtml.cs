@@ -19,8 +19,14 @@ namespace BookingManagement.User.Razor.Pages.Logout
             _logger = logger;
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+            await _authService.SignOutAsync(HttpContext);
+            _logger.LogInformation($"Người dùng {userName} đã đăng xuất");
+            
+            // Redirect về login với thông báo thành công
+            return RedirectToPage("/Login/Index", new { successMessage = "Đăng xuất thành công!" });
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -28,7 +34,9 @@ namespace BookingManagement.User.Razor.Pages.Logout
             var userName = User.FindFirstValue(ClaimTypes.Name);
             await _authService.SignOutAsync(HttpContext);
             _logger.LogInformation($"Người dùng {userName} đã đăng xuất");
-            return RedirectToPage("/Login/Index");
+            
+            // Redirect về login với thông báo thành công
+            return RedirectToPage("/Login/Index", new { successMessage = "Đăng xuất thành công!" });
         }
     }
 }
