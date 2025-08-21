@@ -1,0 +1,267 @@
+@page
+@model BookingManagement.User.Razor.Pages.User.ProfileModel
+@{
+    ViewData["Title"] = "Thông tin cá nhân";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle me-2"></i>
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-person-circle me-2"></i>
+                        Thông tin cá nhân
+                    </h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.UserProfile != null)
+                    {
+                        <div class="row">
+                            <div class="col-md-3 text-center mb-3">
+                                <div class="profile-avatar">
+                                    <div class="avatar-circle">
+                                        <span class="avatar-text">@Model.UserProfile.FullName[0]</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="profile-info">
+                                    <div class="row mb-3">
+                                        <div class="col-sm-4">
+                                            <strong><i class="bi bi-person me-2"></i>Họ và tên:</strong>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            @Model.UserProfile.FullName
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-4">
+                                            <strong><i class="bi bi-envelope me-2"></i>Email:</strong>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            @Model.UserProfile.Email
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-4">
+                                            <strong><i class="bi bi-card-text me-2"></i>MSSV:</strong>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            @Model.MSSV
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-4">
+                                            <strong><i class="bi bi-shield-check me-2"></i>Vai trò:</strong>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <span class="badge bg-info">@Model.UserProfile.RoleName</span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-4">
+                                            <strong><i class="bi bi-calendar-plus me-2"></i>Ngày tạo:</strong>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            @Model.UserProfile.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="text-center">
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                                <i class="bi bi-key me-2"></i>Đổi mật khẩu
+                            </button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            Không thể tải thông tin người dùng.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">
+                    <i class="bi bi-key me-2"></i>Đổi mật khẩu
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="changePasswordForm" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">Mật khẩu mới</label>
+                        <input type="password" class="form-control" id="newPassword" name="NewPassword" required>
+                        <div class="form-text">Mật khẩu phải có ít nhất 6 ký tự</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" required>
+                        <div id="passwordMatchError" class="text-danger" style="display: none;">
+                            Mật khẩu không khớp
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-2"></i>Hủy
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="submitPasswordChange">
+                        <i class="bi bi-check-circle me-2"></i>Xác nhận
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            const newPassword = $('#newPassword');
+            const confirmPassword = $('#confirmPassword');
+            const passwordMatchError = $('#passwordMatchError');
+            const submitButton = $('#submitPasswordChange');
+            
+            function validatePasswords() {
+                const newPass = newPassword.val();
+                const confirmPass = confirmPassword.val();
+                
+                if (newPass.length < 6) {
+                    passwordMatchError.text('Mật khẩu phải có ít nhất 6 ký tự');
+                    passwordMatchError.show();
+                    submitButton.prop('disabled', true);
+                    return false;
+                }
+                
+                if (newPass !== confirmPass) {
+                    passwordMatchError.text('Mật khẩu không khớp');
+                    passwordMatchError.show();
+                    submitButton.prop('disabled', true);
+                    return false;
+                }
+                
+                passwordMatchError.hide();
+                submitButton.prop('disabled', false);
+                return true;
+            }
+            
+            newPassword.on('input', validatePasswords);
+            confirmPassword.on('input', validatePasswords);
+            
+            $('#changePasswordForm').on('submit', function(e) {
+                if (!validatePasswords()) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            
+            // Reset form when modal is closed
+            $('#changePasswordModal').on('hidden.bs.modal', function() {
+                $('#changePasswordForm')[0].reset();
+                passwordMatchError.hide();
+                submitButton.prop('disabled', false);
+            });
+        });
+    </script>
+}
+
+<style>
+    .profile-avatar {
+        margin-bottom: 1rem;
+    }
+    
+    .avatar-circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .avatar-text {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: white;
+        text-transform: uppercase;
+    }
+    
+    .profile-info .row {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .profile-info .row:last-child {
+        border-bottom: none;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 15px;
+    }
+    
+    .card-header {
+        border-radius: 15px 15px 0 0 !important;
+        border: none;
+    }
+    
+    .btn {
+        border-radius: 8px;
+        padding: 0.5rem 1.5rem;
+    }
+    
+    .modal-content {
+        border-radius: 15px;
+        border: none;
+    }
+    
+    .modal-header {
+        border-bottom: 1px solid #e9ecef;
+        border-radius: 15px 15px 0 0;
+    }
+    
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+</style>
